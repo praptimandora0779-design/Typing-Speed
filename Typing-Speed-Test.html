@@ -565,8 +565,7 @@
                 clearInterval(timer);
                 return;
             }
-
-            // Skip backspace input since keydown listener handles it
+            
             if (e && e.inputType === "deleteContentBackward") {
                 return;
             }
@@ -601,8 +600,7 @@
 
             calculate();
         }
-
-        // Backspace handling
+        
         input.addEventListener("keydown", (e) => {
             if (e.key === "Backspace") {
                 const characters = text.querySelectorAll("span");
@@ -622,7 +620,6 @@
                     characters[charIndex].classList.add("active");
                     characters[charIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-                    // Ensure input value length matches charIndex
                     input.value = input.value.substring(0, charIndex);
 
                     calculate();
@@ -669,7 +666,6 @@
         });
 
         document.addEventListener("keydown", function (e) {
-            // Keep input focused unless result modal is active or user is targeting an input element
             if (document.getElementById("resultBox").style.display !== "block" && e.target !== input) {
                 input.focus();
             }
