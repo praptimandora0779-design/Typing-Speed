@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Typing Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #081122, #0b1430, #120b2d);
+            overflow: hidden;
+        }
+
+        .main-box {
+            width: 850px;
+            background: rgba(8, 14, 30, 0.95);
+            border: 1px solid #243149;
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .ai-powered {
+            position: absolute;
+            top: -14px;
+            left: 25px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #00d9ff;
+            background: #071827;
+            border: 1px solid #087e9d;
+            box-shadow: 0 0 12px rgba(0, 217, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #151e30;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #00d9ff, #7561ff);
+            font-size: 14px;
+        }
+
+        .title h2 {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .system {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #788397;
+        }
+
+        .green-dot {
+            width: 7px;
+            height: 7px;
+            background: #00ff9d;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00ff9d;
+        }
+
+        .typing-box {
+            height: 280px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 30px;
+            line-height: 1.8;
+            color: grey;
+            cursor: text;
+        }
+
+        .typing-box::-webkit-scrollbar {
+            width: 5px;
+        }
+
+
+        .typing-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+
+        .typing-box::-webkit-scrollbar-thumb {
+
+            background: linear-gradient(#00eaff,
+                    #7c4dff);
+
+            border-radius: 10px;
+        }
+
+        #text {
+
+            font-size: 17px;
+
+            line-height: 2.05;
+
+            letter-spacing: 0.3px;
+
+            color: #626b7d;
+
+            word-wrap: break-word;
+        }
+
+        .typing-box span.correct {
+            color: #00ff66;
+        }
+
+        .typing-box span.wrong {
+            color: red;
+            background: rgba(255, 49, 93, 0.15);
+        }
+
+        .typing-box span.active {
+            border-left: 3px solid cyan;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .bottom {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card {
+            width: 120px;
+            background: #1f2937;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .card p {
+            font-size: 26px;
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .result-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #111827;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            box-shadow: 0 0 25px cyan;
+            z-index: 1000;
+        }
+
+        .result-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .result-box p {
+            margin: 12px 0;
+            font-size: 22px;
+        }
+
+        .result-box button {
+            margin-top: 20px;
+        }
+
+        button {
+            height: 55px;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(to right, #00c6ff, #7b61ff);
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #input {
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-box">
+        <div class="ai-powered">
+            AI POWERED
+        </div>
+
+        <div class="header">
+            <div class="title">
+                <div class="title-icon">
+                    ✦
+                </div>
+                <h2>
+                    AI Typing Test
+                </h2>
+            </div>
+
+            <div class="system">
+                <span class="green-dot"></span>
+                SYSTEM READY
+            </div>
+        </div>
+
+        <div class="typing-box" id="typingBox">
+            <p id="text"></p>
+        </div>
+
+        <input type="text" id="input" autocomplete="off">
+
+        <div class="bottom">
+            <div class="card">
+                <h3>TIME LEFT</h3>
+                <p id="time">60</p>
+            </div>
+
+            <div class="card">
+                <h3>MISTAKES</h3>
+                <p id="mistake">0</p>
+            </div>
+
+            <div class="card">
+                <h3>WPM</h3>
+                <p id="wpm">0</p>
+            </div>
+
+            <div class="card">
+                <h3>CPM</h3>
+                <p id="cpm">0</p>
+            </div>
+
+            <div class="card">
+                <h3>ACCURACY</h3>
+                <p id="accuracy">100%</p>
+            </div>
+
+            <div id="resultBox" class="result-box">
+                <h2>🎉 Test Completed!</h2>
+
+                <p>WPM : <span id="finalWpm"></span></p>
+
+                <p>CPM : <span id="finalCpm"></span></p>
+
+                <p>Mistakes : <span id="finalMistakes"></span></p>
+
+                <p>Accuracy : <span id="finalAccuracy"></span></p>
+
+                <button onclick="closeResult()">Close</button>
+            </div>
+
+            <button id="restart">Try Again</button>
+        </div>
+
+    </div>
+
+    <script>
+        const paragraphs = [
+
+            `Artificial Intelligence is one of the most powerful technologies of the twenty-first century. It enables computers to learn from experience, analyze massive amounts of information, recognize patterns, understand human language, and make intelligent decisions without being explicitly programmed for every situation. AI is now used in healthcare to diagnose diseases, in education to personalize learning, in agriculture to monitor crop health, in transportation to develop self-driving vehicles, and in finance to detect fraudulent transactions. Voice assistants like Siri, Google Assistant, and Alexa use artificial intelligence to understand spoken commands and respond naturally. AI also powers recommendation systems on YouTube, Netflix, Amazon, and Spotify by studying user preferences and suggesting relevant content. As technology continues to evolve, artificial intelligence is expected to become even more accurate, efficient, and useful. However, experts also emphasize the importance of ethical AI development, data privacy, fairness, transparency, and responsible use to ensure that this revolutionary technology benefits everyone around the world.`,
+
+            `Modern technology has transformed almost every aspect of human life. Smartphones have become powerful computers that allow people to communicate instantly, access educational resources, perform online banking, shop from anywhere, navigate using GPS, and attend virtual meetings. High-speed internet and cloud computing have made it possible to store files securely online and access them from any device at any time. Businesses rely on technology to automate repetitive tasks, improve customer service, analyze market trends, and increase productivity. Schools and universities use digital classrooms, online examinations, and interactive learning platforms to improve education. Hospitals use advanced medical imaging, robotic surgery, and wearable health devices to provide better treatment. Even homes have become smarter with devices that automatically control lighting, temperature, security, and entertainment systems. Technology continues to evolve rapidly, creating new opportunities for innovation, employment, communication, and scientific discoveries that improve people's quality of life.`,
+
+            `Robotics is an exciting branch of technology that combines mechanical engineering, electronics, sensors, and artificial intelligence to create intelligent machines capable of performing complex tasks. Industrial robots assemble automobiles with incredible precision, while medical robots assist surgeons during delicate operations. Delivery robots transport packages, warehouse robots organize inventory, and agricultural robots help farmers monitor crops and harvest produce efficiently. Scientists are also developing humanoid robots that can interact with people naturally by recognizing faces, understanding speech, and expressing emotions. Space agencies use robotic rovers to explore planets where humans cannot easily travel. Underwater robots inspect pipelines and study marine life in deep oceans. As artificial intelligence becomes more advanced, robots will continue to become smarter, safer, and more capable of working alongside humans in homes, hospitals, factories, schools, and research laboratories.`,
+
+            `Cybersecurity has become one of the most important fields in today's digital world because billions of people use computers, smartphones, and the internet every day. Cybersecurity professionals protect sensitive information from hackers, malware, ransomware, phishing attacks, identity theft, and data breaches. Companies invest heavily in firewalls, encryption, multi-factor authentication, and security monitoring systems to safeguard customer information and business operations. Governments also develop advanced cybersecurity strategies to protect national infrastructure, communication systems, and financial networks. Individuals can improve their online safety by using strong passwords, enabling two-factor authentication, updating software regularly, avoiding suspicious emails, and downloading applications only from trusted sources. As cyber threats continue to evolve, cybersecurity experts constantly develop new technologies and strategies to defend against increasingly sophisticated attacks.`,
+
+            `Cloud computing has revolutionized the way individuals and organizations store, process, and share information. Instead of relying entirely on local computers, cloud platforms provide access to powerful servers through the internet. Popular cloud providers such as Amazon Web Services, Microsoft Azure, and Google Cloud Platform allow businesses to host websites, develop applications, analyze big data, and store large amounts of information securely. Cloud computing reduces hardware costs, improves collaboration, and enables employees to work remotely from anywhere in the world. Students use cloud storage to access assignments from multiple devices, while businesses rely on cloud services for disaster recovery, data backup, and scalable infrastructure. The flexibility and reliability of cloud computing continue to make it one of the most valuable technologies in the digital age.`,
+
+            `Machine learning is a specialized branch of artificial intelligence that allows computers to improve their performance by learning from data instead of following only fixed programming instructions. Machine learning algorithms identify patterns, make predictions, classify information, and continuously improve accuracy through experience. Banks use machine learning to detect fraudulent transactions, hospitals predict diseases from medical records, online stores recommend products based on shopping history, and streaming platforms suggest movies according to user preferences. Scientists also use machine learning for weather forecasting, language translation, facial recognition, scientific research, and autonomous vehicles. As larger datasets become available and computing power increases, machine learning continues to drive innovation across numerous industries and scientific disciplines.`,
+
+            `Quantum computing represents the next generation of computing technology. Unlike traditional computers that process information using bits represented by zeros and ones, quantum computers use quantum bits known as qubits that can exist in multiple states simultaneously. This unique capability allows quantum computers to solve certain highly complex problems much faster than conventional computers. Researchers believe quantum computing could revolutionize medicine by accelerating drug discovery, improve financial modeling, optimize transportation networks, strengthen scientific simulations, and solve mathematical problems that are currently impossible for classical computers. Although quantum computing is still in its early stages, technology companies and research institutions around the world are investing billions of dollars to advance this groundbreaking field.`,
+
+            `The future of technology will be shaped by artificial intelligence, robotics, quantum computing, renewable energy, biotechnology, space exploration, and advanced communication systems. Smart cities will use interconnected sensors to manage traffic, reduce pollution, conserve energy, and improve public safety. Autonomous vehicles may become common, reducing accidents and improving transportation efficiency. Virtual reality and augmented reality will create immersive educational experiences, while wearable devices will continuously monitor health conditions and provide early warnings about diseases. Artificial intelligence assistants will become even more capable of understanding human conversations and performing complex tasks. Although technological progress offers incredible opportunities, society must also address important challenges such as cybersecurity, ethical AI, digital privacy, environmental sustainability, and equal access to advanced technologies. Responsible innovation will ensure that future technologies improve the lives of people across the globe while protecting human values and promoting sustainable development.`
+
+        ];
+
+        const text = document.getElementById("text");
+        const input = document.getElementById("input");
+
+        const timerTag = document.getElementById("time");
+        const mistakeTag = document.getElementById("mistake");
+        const wpmTag = document.getElementById("wpm");
+        const cpmTag = document.getElementById("cpm");
+        const accuracyTag = document.getElementById("accuracy");
+
+        const restart = document.getElementById("restart");
+
+        let timer;
+        let timeLeft = 60;
+        let mistakes = 0;
+        let charIndex = 0;
+        let started = false;
+
+        function loadParagraph() {
+            let random = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+
+            text.innerHTML = "";
+
+            random.split("").forEach(letter => {
+                text.innerHTML += `<span>${letter}</span>`;
+            });
+
+            text.querySelectorAll("span")[0].classList.add("active");
+
+            input.value = "";
+            input.focus();
+
+            timeLeft = 60;
+            mistakes = 0;
+            charIndex = 0;
+            started = false;
+
+            document.getElementById("resultBox").style.display = "none";
+
+            clearInterval(timer);
+
+            timerTag.innerText = timeLeft;
+            mistakeTag.innerText = mistakes;
+            wpmTag.innerText = 0;
+            cpmTag.innerText = 0;
+            accuracyTag.innerText = "100%";
+        }
+
+        function startTimer() {
+            timer = setInterval(function () {
+                console.log(timeLeft);
+
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    timerTag.innerText = timeLeft + "s";
+                    calculate();
+                }
+                else {
+
+                    clearInterval(timer);
+
+                    input.blur();
+
+                    started = false;
+
+                    document.getElementById("resultBox").style.display = "block";
+
+                    document.getElementById("finalWpm").innerText = wpmTag.innerText;
+
+                    document.getElementById("finalCpm").innerText = cpmTag.innerText;
+
+                    document.getElementById("finalMistakes").innerText = mistakes;
+
+                    document.getElementById("finalAccuracy").innerText =
+                        accuracyTag.innerText;
+                }
+            }, 1000);
+        }
+
+        function typing() {
+            const characters = text.querySelectorAll("span");
+
+            if (charIndex >= characters.length) {
+                clearInterval(timer);
+                return;
+            }
+
+            if (!started) {
+                startTimer();
+                started = true;
+            }
+
+            let typed = input.value.charAt(charIndex);
+
+            if (typed == null || typed == "") return;
+
+            if (typed === characters[charIndex].innerText) {
+                characters[charIndex].classList.add("correct");
+            }
+            else {
+                characters[charIndex].classList.add("wrong");
+                mistakes++;
+                mistakeTag.innerHTML = mistakes;
+            }
+
+            characters[charIndex].classList.remove("active");
+
+            charIndex++;
+
+            if (charIndex < characters.length) {
+                characters[charIndex].classList.add("active");
+            }
+
+            calculate();
+        }
+
+        function calculate() {
+
+            let timeUsed = 60 - timeLeft;
+
+            if (timeUsed <= 0) {
+                return;
+            }
+
+            let correctCharacters = charIndex - mistakes;
+
+            if (correctCharacters < 0) {
+                correctCharacters = 0;
+            }
+
+            let cpm = Math.round((correctCharacters / timeUsed) * 60);
+
+            let minutes = timeUsed / 60;
+            let wpm = Math.round((correctCharacters / 5) / minutes);
+
+            let accuracy = 100;
+
+            if (charIndex > 0) {
+                accuracy = Math.round((correctCharacters / charIndex) * 100);
+            }
+
+            cpmTag.innerText = cpm;
+            wpmTag.innerText = wpm;
+            accuracyTag.innerText = accuracy + "%";
+        }
+
+        function closeResult() {
+
+            document.getElementById("resultBox").style.display = "none";
+
+            loadParagraph();
+        }
+
+        input.addEventListener("input", typing);
+
+        console.log(typingBox);
+        console.log(input);
+        console.log(restart);
+
+        document.querySelector(".typing-box").addEventListener("click", function () {
+            input.focus();
+        });
+
+        restart.addEventListener("click", function () {
+            loadParagraph();
+        });
+
+        loadParagraph();
+
+    </script>
+</body>
+
+</html>
