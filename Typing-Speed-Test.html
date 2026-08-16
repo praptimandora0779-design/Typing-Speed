@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -19,34 +19,49 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #081122, #0b1430, #120b2d);
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a, #090d16);
             overflow: hidden;
-            color: White;
+            color: #f8fafc;
         }
 
         .main-box {
-            width: 850px;
-            background: rgba(8, 14, 30, 0.95);
-            border: 1px solid #243149;
-            border-radius: 20px;
-            padding: 32px;
+            width: 880px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 36px;
             position: relative;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(99, 102, 241, 0.15);
         }
 
         .ai-powered {
             position: absolute;
             top: -14px;
-            left: 25px;
-            padding: 6px 15px;
+            left: 32px;
+            padding: 5px 16px;
             border-radius: 20px;
-            font-size: 9px;
-            font-weight: bold;
+            font-size: 10px;
+            font-weight: 700;
             letter-spacing: 2px;
-            color: #00d9ff;
-            background: #071827;
-            border: 1px solid #087e9d;
-            box-shadow: 0 0 12px rgba(0, 217, 255, 0.3);
+            color: #38bdf8;
+            background: #0f172a;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-powered::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #38bdf8;
         }
 
         .header {
@@ -54,136 +69,217 @@
             justify-content: space-between;
             align-items: center;
             padding-bottom: 20px;
-            border-bottom: 1px solid #151e30;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .title-icon {
-            width: 25px;
-            height: 25px;
-            border-radius: 7px;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #00d9ff, #7561ff);
-            font-size: 14px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
 
         .title h2 {
-            font-size: 14px;
-            letter-spacing: 1px;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .system {
             display: flex;
             align-items: center;
-            gap: 7px;
-            font-size: 8px;
-            letter-spacing: 2px;
-            color: #788397;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .green-dot {
-            width: 7px;
-            height: 7px;
-            background: #00ff9d;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #00ff9d;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(0.9);
+            }
         }
 
         .typing-box {
-            height: 280px;
+            height: 250px;
             overflow-y: auto;
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 30px;
-            line-height: 1.8;
-            color: grey;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.6);
+            padding: 24px;
+            border-radius: 16px;
+            margin-top: 24px;
             cursor: text;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .typing-box:hover,
+        .typing-box:focus-within {
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: inset 0 0 20px rgba(56, 189, 248, 0.05);
         }
 
         .typing-box::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
-
 
         .typing-box::-webkit-scrollbar-track {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
         }
 
-
         .typing-box::-webkit-scrollbar-thumb {
-
-            background: linear-gradient(#00eaff,
-                    #7c4dff);
-
+            background: linear-gradient(to bottom, #38bdf8, #818cf8);
             border-radius: 10px;
         }
 
         #text {
-
-            font-size: 17px;
-
-            line-height: 2.05;
-
-            letter-spacing: 0.3px;
-
-            color: #626b7d;
-
+            font-size: 20px;
+            line-height: 1.9;
+            letter-spacing: 0.4px;
+            color: #64748b;
             word-wrap: break-word;
+            user-select: none;
         }
 
         .typing-box span.correct {
-            color: #00ff66;
+            color: #34d399;
+            text-shadow: 0 0 8px rgba(52, 211, 153, 0.3);
         }
 
         .typing-box span.wrong {
-            color: red;
-            background: rgba(255, 49, 93, 0.15);
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.2);
+            border-radius: 3px;
+            text-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
         }
 
         .typing-box span.active {
-            border-left: 3px solid cyan;
-            animation: blink 0.7s infinite;
+            border-left: 3px solid #38bdf8;
+            background: rgba(56, 189, 248, 0.15);
+            border-radius: 2px;
+            animation: blink 0.8s infinite;
+            box-shadow: -2px 0 10px rgba(56, 189, 248, 0.5);
         }
 
         @keyframes blink {
+
+            0%,
+            100% {
+                border-color: #38bdf8;
+            }
+
             50% {
                 border-color: transparent;
             }
         }
 
+        .tip-bar {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .tip-bar span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .bottom {
-            margin-top: 20px;
+            margin-top: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .card {
-            width: 120px;
-            background: #1f2937;
+            flex: 1;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             text-align: center;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px 10px;
+            border-radius: 14px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .card h3 {
-            font-size: 14px;
-            color: #ccc;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 6px;
         }
 
         .card p {
-            font-size: 26px;
-            color: #00ffff;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+
+        .card p#time {
+            color: #38bdf8;
+        }
+
+        .card p#mistake {
+            color: #f87171;
+        }
+
+        .card p#wpm {
+            color: #a78bfa;
+        }
+
+        .card p#cpm {
+            color: #fbbf24;
+        }
+
+        .card p#accuracy {
+            color: #34d399;
         }
 
         .result-box {
@@ -191,48 +287,101 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #111827;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 36px 48px;
+            border-radius: 20px;
             text-align: center;
             display: none;
-            box-shadow: 0 0 25px cyan;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.2);
             z-index: 1000;
+            min-width: 320px;
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -46%) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         .result-box h2 {
+            font-size: 24px;
             margin-bottom: 20px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .result-box p {
-            margin: 12px 0;
+        .result-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .result-stat-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .result-stat-item label {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .result-stat-item span {
             font-size: 22px;
-        }
-
-        .result-box button {
-            margin-top: 20px;
+            font-weight: 700;
+            color: #f8fafc;
         }
 
         button {
-            height: 55px;
-            padding: 15px 35px;
+            height: 48px;
+            padding: 0 28px;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             color: white;
-            background: linear-gradient(to right, #00c6ff, #7b61ff);
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         button:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+            opacity: 0.95;
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         #input {
             opacity: 0;
             position: absolute;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -263,12 +412,17 @@
             <p id="text"></p>
         </div>
 
+        <div class="tip-bar">
+            <span>⌨️ Press <strong>Backspace</strong> to fix errors</span>
+            <span>⌨️ Click box to focus</span>
+        </div>
+
         <input type="text" id="input" autocomplete="off">
 
         <div class="bottom">
             <div class="card">
                 <h3>TIME LEFT</h3>
-                <p id="time">60</p>
+                <p id="time">60s</p>
             </div>
 
             <div class="card">
@@ -291,44 +445,45 @@
                 <p id="accuracy">100%</p>
             </div>
 
-            <div id="resultBox" class="result-box">
-                <h2>🎉 Test Completed!</h2>
-
-                <p>WPM : <span id="finalWpm"></span></p>
-
-                <p>CPM : <span id="finalCpm"></span></p>
-
-                <p>Mistakes : <span id="finalMistakes"></span></p>
-
-                <p>Accuracy : <span id="finalAccuracy"></span></p>
-
-                <button onclick="closeResult()">Close</button>
-            </div>
-
             <button id="restart">Try Again</button>
         </div>
 
+        <div id="resultBox" class="result-box">
+            <h2>🎉 Test Completed!</h2>
+
+            <div class="result-stats">
+                <div class="result-stat-item">
+                    <label>WPM</label>
+                    <span id="finalWpm">0</span>
+                </div>
+                <div class="result-stat-item">
+                    <label>CPM</label>
+                    <span id="finalCpm">0</span>
+                </div>
+                <div class="result-stat-item">
+                    <label>MISTAKES</label>
+                    <span id="finalMistakes">0</span>
+                </div>
+                <div class="result-stat-item">
+                    <label>ACCURACY</label>
+                    <span id="finalAccuracy">100%</span>
+                </div>
+            </div>
+
+            <button onclick="closeResult()">Try Next Paragraph</button>
+        </div>
     </div>
 
     <script>
         const paragraphs = [
-
             `Artificial Intelligence is one of the most powerful technologies of the twenty-first century. It enables computers to learn from experience, analyze massive amounts of information, recognize patterns, understand human language, and make intelligent decisions without being explicitly programmed for every situation. AI is now used in healthcare to diagnose diseases, in education to personalize learning, in agriculture to monitor crop health, in transportation to develop self-driving vehicles, and in finance to detect fraudulent transactions. Voice assistants like Siri, Google Assistant, and Alexa use artificial intelligence to understand spoken commands and respond naturally. AI also powers recommendation systems on YouTube, Netflix, Amazon, and Spotify by studying user preferences and suggesting relevant content. As technology continues to evolve, artificial intelligence is expected to become even more accurate, efficient, and useful. However, experts also emphasize the importance of ethical AI development, data privacy, fairness, transparency, and responsible use to ensure that this revolutionary technology benefits everyone around the world.`,
-
             `Modern technology has transformed almost every aspect of human life. Smartphones have become powerful computers that allow people to communicate instantly, access educational resources, perform online banking, shop from anywhere, navigate using GPS, and attend virtual meetings. High-speed internet and cloud computing have made it possible to store files securely online and access them from any device at any time. Businesses rely on technology to automate repetitive tasks, improve customer service, analyze market trends, and increase productivity. Schools and universities use digital classrooms, online examinations, and interactive learning platforms to improve education. Hospitals use advanced medical imaging, robotic surgery, and wearable health devices to provide better treatment. Even homes have become smarter with devices that automatically control lighting, temperature, security, and entertainment systems. Technology continues to evolve rapidly, creating new opportunities for innovation, employment, communication, and scientific discoveries that improve people's quality of life.`,
-
             `Robotics is an exciting branch of technology that combines mechanical engineering, electronics, sensors, and artificial intelligence to create intelligent machines capable of performing complex tasks. Industrial robots assemble automobiles with incredible precision, while medical robots assist surgeons during delicate operations. Delivery robots transport packages, warehouse robots organize inventory, and agricultural robots help farmers monitor crops and harvest produce efficiently. Scientists are also developing humanoid robots that can interact with people naturally by recognizing faces, understanding speech, and expressing emotions. Space agencies use robotic rovers to explore planets where humans cannot easily travel. Underwater robots inspect pipelines and study marine life in deep oceans. As artificial intelligence becomes more advanced, robots will continue to become smarter, safer, and more capable of working alongside humans in homes, hospitals, factories, schools, and research laboratories.`,
-
             `Cybersecurity has become one of the most important fields in today's digital world because billions of people use computers, smartphones, and the internet every day. Cybersecurity professionals protect sensitive information from hackers, malware, ransomware, phishing attacks, identity theft, and data breaches. Companies invest heavily in firewalls, encryption, multi-factor authentication, and security monitoring systems to safeguard customer information and business operations. Governments also develop advanced cybersecurity strategies to protect national infrastructure, communication systems, and financial networks. Individuals can improve their online safety by using strong passwords, enabling two-factor authentication, updating software regularly, avoiding suspicious emails, and downloading applications only from trusted sources. As cyber threats continue to evolve, cybersecurity experts constantly develop new technologies and strategies to defend against increasingly sophisticated attacks.`,
-
             `Cloud computing has revolutionized the way individuals and organizations store, process, and share information. Instead of relying entirely on local computers, cloud platforms provide access to powerful servers through the internet. Popular cloud providers such as Amazon Web Services, Microsoft Azure, and Google Cloud Platform allow businesses to host websites, develop applications, analyze big data, and store large amounts of information securely. Cloud computing reduces hardware costs, improves collaboration, and enables employees to work remotely from anywhere in the world. Students use cloud storage to access assignments from multiple devices, while businesses rely on cloud services for disaster recovery, data backup, and scalable infrastructure. The flexibility and reliability of cloud computing continue to make it one of the most valuable technologies in the digital age.`,
-
             `Machine learning is a specialized branch of artificial intelligence that allows computers to improve their performance by learning from data instead of following only fixed programming instructions. Machine learning algorithms identify patterns, make predictions, classify information, and continuously improve accuracy through experience. Banks use machine learning to detect fraudulent transactions, hospitals predict diseases from medical records, online stores recommend products based on shopping history, and streaming platforms suggest movies according to user preferences. Scientists also use machine learning for weather forecasting, language translation, facial recognition, scientific research, and autonomous vehicles. As larger datasets become available and computing power increases, machine learning continues to drive innovation across numerous industries and scientific disciplines.`,
-
             `Quantum computing represents the next generation of computing technology. Unlike traditional computers that process information using bits represented by zeros and ones, quantum computers use quantum bits known as qubits that can exist in multiple states simultaneously. This unique capability allows quantum computers to solve certain highly complex problems much faster than conventional computers. Researchers believe quantum computing could revolutionize medicine by accelerating drug discovery, improve financial modeling, optimize transportation networks, strengthen scientific simulations, and solve mathematical problems that are currently impossible for classical computers. Although quantum computing is still in its early stages, technology companies and research institutions around the world are investing billions of dollars to advance this groundbreaking field.`,
-
             `The future of technology will be shaped by artificial intelligence, robotics, quantum computing, renewable energy, biotechnology, space exploration, and advanced communication systems. Smart cities will use interconnected sensors to manage traffic, reduce pollution, conserve energy, and improve public safety. Autonomous vehicles may become common, reducing accidents and improving transportation efficiency. Virtual reality and augmented reality will create immersive educational experiences, while wearable devices will continuously monitor health conditions and provide early warnings about diseases. Artificial intelligence assistants will become even more capable of understanding human conversations and performing complex tasks. Although technological progress offers incredible opportunities, society must also address important challenges such as cybersecurity, ethical AI, digital privacy, environmental sustainability, and equal access to advanced technologies. Responsible innovation will ensure that future technologies improve the lives of people across the globe while protecting human values and promoting sustainable development.`
-
         ];
 
         const text = document.getElementById("text");
@@ -357,7 +512,9 @@
                 text.innerHTML += `<span>${letter}</span>`;
             });
 
-            text.querySelectorAll("span")[0].classList.add("active");
+            if (text.querySelectorAll("span").length > 0) {
+                text.querySelectorAll("span")[0].classList.add("active");
+            }
 
             input.value = "";
             input.focus();
@@ -371,7 +528,7 @@
 
             clearInterval(timer);
 
-            timerTag.innerText = timeLeft;
+            timerTag.innerText = timeLeft + "s";
             mistakeTag.innerText = mistakes;
             wpmTag.innerText = 0;
             cpmTag.innerText = 0;
@@ -380,40 +537,37 @@
 
         function startTimer() {
             timer = setInterval(function () {
-                console.log(timeLeft);
-
                 if (timeLeft > 0) {
                     timeLeft--;
                     timerTag.innerText = timeLeft + "s";
                     calculate();
-                }
-                else {
-
+                } else {
                     clearInterval(timer);
-
                     input.blur();
-
                     started = false;
-
-                    document.getElementById("resultBox").style.display = "block";
-
-                    document.getElementById("finalWpm").innerText = wpmTag.innerText;
-
-                    document.getElementById("finalCpm").innerText = cpmTag.innerText;
-
-                    document.getElementById("finalMistakes").innerText = mistakes;
-
-                    document.getElementById("finalAccuracy").innerText =
-                        accuracyTag.innerText;
+                    showResults();
                 }
             }, 1000);
         }
 
-        function typing() {
+        function showResults() {
+            document.getElementById("resultBox").style.display = "block";
+            document.getElementById("finalWpm").innerText = wpmTag.innerText;
+            document.getElementById("finalCpm").innerText = cpmTag.innerText;
+            document.getElementById("finalMistakes").innerText = mistakes;
+            document.getElementById("finalAccuracy").innerText = accuracyTag.innerText;
+        }
+
+        function typing(e) {
             const characters = text.querySelectorAll("span");
 
-            if (charIndex >= characters.length) {
+            if (charIndex >= characters.length || timeLeft <= 0) {
                 clearInterval(timer);
+                return;
+            }
+
+            // Skip backspace input since keydown listener handles it
+            if (e && e.inputType === "deleteContentBackward") {
                 return;
             }
 
@@ -424,30 +578,59 @@
 
             let typed = input.value.charAt(charIndex);
 
-            if (typed == null || typed == "") return;
+            if (typed == null || typed === "") return;
 
             if (typed === characters[charIndex].innerText) {
                 characters[charIndex].classList.add("correct");
-            }
-            else {
+            } else {
                 characters[charIndex].classList.add("wrong");
                 mistakes++;
-                mistakeTag.innerHTML = mistakes;
+                mistakeTag.innerText = mistakes;
             }
 
             characters[charIndex].classList.remove("active");
-
             charIndex++;
 
             if (charIndex < characters.length) {
                 characters[charIndex].classList.add("active");
+                characters[charIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
+            } else {
+                clearInterval(timer);
+                showResults();
             }
 
             calculate();
         }
 
-        function calculate() {
+        // Backspace handling
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace") {
+                const characters = text.querySelectorAll("span");
+                if (charIndex > 0 && timeLeft > 0) {
+                    if (charIndex < characters.length) {
+                        characters[charIndex].classList.remove("active");
+                    }
 
+                    charIndex--;
+
+                    if (characters[charIndex].classList.contains("wrong")) {
+                        mistakes = Math.max(0, mistakes - 1);
+                        mistakeTag.innerText = mistakes;
+                    }
+
+                    characters[charIndex].classList.remove("correct", "wrong");
+                    characters[charIndex].classList.add("active");
+                    characters[charIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+                    // Ensure input value length matches charIndex
+                    input.value = input.value.substring(0, charIndex);
+
+                    calculate();
+                }
+            }
+        });
+
+        function calculate() {
             let timeUsed = 60 - timeLeft;
 
             if (timeUsed <= 0) {
@@ -461,12 +644,10 @@
             }
 
             let cpm = Math.round((correctCharacters / timeUsed) * 60);
-
             let minutes = timeUsed / 60;
             let wpm = Math.round((correctCharacters / 5) / minutes);
 
             let accuracy = 100;
-
             if (charIndex > 0) {
                 accuracy = Math.round((correctCharacters / charIndex) * 100);
             }
@@ -477,20 +658,21 @@
         }
 
         function closeResult() {
-
             document.getElementById("resultBox").style.display = "none";
-
             loadParagraph();
         }
 
         input.addEventListener("input", typing);
 
-        console.log(typingBox);
-        console.log(input);
-        console.log(restart);
-
         document.querySelector(".typing-box").addEventListener("click", function () {
             input.focus();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            // Keep input focused unless result modal is active or user is targeting an input element
+            if (document.getElementById("resultBox").style.display !== "block" && e.target !== input) {
+                input.focus();
+            }
         });
 
         restart.addEventListener("click", function () {
@@ -498,7 +680,6 @@
         });
 
         loadParagraph();
-
     </script>
 </body>
 
